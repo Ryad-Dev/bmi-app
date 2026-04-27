@@ -5,35 +5,32 @@ interface ImcGaugeProps {
 }
 
 const zones = [
-  { label: "Maigreur", color: "#10b981", width: 15 },
-  { label: "Normal", color: "#22c55e", width: 30 },
-  { label: "Surpoids", color: "#f59e0b", width: 20 },
-  { label: "Obésité", color: "#ef4444", width: 35 },
+  { label: "Maigreur", color: "#30D158", width: 15 },
+  { label: "Normal",   color: "#007AFF", width: 30 },
+  { label: "Surpoids", color: "#FF9F0A", width: 20 },
+  { label: "Obésité",  color: "#FF3B30", width: 35 },
 ];
 
 export function ImcGauge({ percent }: ImcGaugeProps) {
-  const clampedPct = Math.min(Math.max(percent, 2), 98);
-
+  const clamped = Math.min(Math.max(percent, 2), 98);
   return (
-    <div className="mt-4 mb-1">
-      {/* Colored bar */}
-      <div className="relative h-3 rounded-full overflow-hidden flex mb-3">
+    <div style={{ marginTop: 20 }}>
+      <div style={{ position: "relative", height: 8, borderRadius: 8, overflow: "hidden", display: "flex", marginBottom: 10 }}>
         {zones.map((z) => (
-          <div
-            key={z.label}
-            style={{ width: `${z.width}%`, backgroundColor: z.color }}
-          />
+          <div key={z.label} style={{ width: `${z.width}%`, background: z.color }} />
         ))}
-        {/* Cursor */}
-        <div
-          className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-5 h-5 rounded-full bg-white border-2 border-slate-800 shadow-md transition-all duration-500 ease-out"
-          style={{ left: `${clampedPct}%` }}
-        />
+        <div style={{
+          position: "absolute", top: "50%", left: `${clamped}%`,
+          transform: "translate(-50%, -50%)",
+          width: 18, height: 18, borderRadius: "50%",
+          background: "#fff",
+          boxShadow: "0 2px 8px rgba(0,0,0,0.22), 0 0 0 2px rgba(0,0,0,0.08)",
+          transition: "left 0.4s ease",
+        }} />
       </div>
-      {/* Zone labels */}
-      <div className="flex justify-between text-[10px] text-muted-foreground font-medium">
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
         {zones.map((z) => (
-          <span key={z.label}>{z.label}</span>
+          <span key={z.label} style={{ fontSize: 10, fontWeight: 600, color: "#aeaeb2", textTransform: "uppercase", letterSpacing: "0.04em" }}>{z.label}</span>
         ))}
       </div>
     </div>

@@ -15,66 +15,68 @@ function WhatsappPopup({ onClose }: { onClose: () => void }) {
   }, [onClose]);
 
   return (
-    <>
-      {/* Backdrop */}
+    <div style={{
+      position: "fixed", inset: 0, zIndex: 50,
+      background: "rgba(0,0,0,0.18)",
+      backdropFilter: "blur(8px)",
+      display: "flex", alignItems: "center", justifyContent: "center",
+    }} onClick={onClose}>
       <div
-        className="fixed inset-0 z-40"
-        style={{ background: "rgba(0,0,0,0.6)", backdropFilter: "blur(4px)" }}
-        onClick={onClose}
-      />
-
-      {/* Modal */}
-      <div
-        className="fixed z-50 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] max-w-sm rounded-3xl p-6 flex flex-col items-center gap-4"
+        onClick={(e) => e.stopPropagation()}
         style={{
-          background: "linear-gradient(145deg, #111118 0%, #1a1726 100%)",
-          border: "1px solid rgba(255,255,255,0.1)",
-          boxShadow: "0 32px 80px rgba(0,0,0,0.6)",
+          background: "#fff",
+          borderRadius: 24,
+          padding: "32px 28px",
+          width: "90%", maxWidth: 360,
+          display: "flex", flexDirection: "column", alignItems: "center", gap: 20,
+          boxShadow: "0 32px 80px rgba(0,0,0,0.14), 0 4px 16px rgba(0,0,0,0.06)",
+          position: "relative",
         }}
       >
-        {/* Close */}
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 w-8 h-8 rounded-full flex items-center justify-center text-white/40 hover:text-white transition-colors"
-          style={{ background: "rgba(255,255,255,0.07)" }}
-        >
-          ✕
-        </button>
+        <button onClick={onClose} style={{
+          position: "absolute", top: 14, right: 14,
+          width: 30, height: 30, borderRadius: "50%",
+          background: "#ffffff", border: "none", cursor: "pointer",
+          display: "flex", alignItems: "center", justifyContent: "center",
+          fontSize: 13, color: "#8e8e93",
+        }}>✕</button>
 
-        {/* WhatsApp icon */}
-        <div
-          className="w-16 h-16 rounded-2xl flex items-center justify-center text-3xl"
-          style={{ background: "linear-gradient(135deg, #25D36622 0%, #25D36640 100%)", border: "1px solid #25D36640" }}
-        >
-          💬
-        </div>
+        <div style={{
+          width: 64, height: 64, borderRadius: 16,
+          background: "#e8faf2",
+          display: "flex", alignItems: "center", justifyContent: "center",
+          fontSize: 28,
+        }}>💬</div>
 
-        {/* Text */}
-        <div className="text-center flex flex-col gap-2">
-          <h2 className="text-lg font-black text-white leading-tight">
-            Rejoins la communauté WhatsApp !
-          </h2>
-          <p className="text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.5)" }}>
-            Astuces exclusives sur la création d'applications et le développement.
+        <div style={{ textAlign: "center" }}>
+          <p style={{ fontSize: 18, fontWeight: 700, color: "#1c1c1e", margin: "0 0 8px" }}>
+            Rejoins la communauté !
+          </p>
+          <p style={{ fontSize: 14, color: "#6e6e73", lineHeight: 1.6, margin: 0 }}>
+            Reçois des astuces exclusives sur la création d'apps et le développement sur mon canal WhatsApp.
           </p>
         </div>
 
-        {/* CTA */}
-        <a
-          href={WHATSAPP_LINK}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="w-full py-4 rounded-2xl text-white font-bold text-sm text-center transition-all hover:opacity-90 active:scale-[0.98]"
-          style={{ background: "linear-gradient(135deg, #25D366 0%, #128C7E 100%)" }}
+        <a href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer"
           onClick={onClose}
-        >
+          style={{
+            display: "block", width: "100%",
+            padding: "14px 0", borderRadius: 14,
+            background: "#25D366", color: "#fff",
+            textAlign: "center", fontWeight: 700, fontSize: 15,
+            textDecoration: "none",
+          }}>
           📲 Rejoindre le canal WhatsApp
         </a>
 
-        {/* Skip */}
-       
+        <button onClick={onClose} style={{
+          background: "none", border: "none", cursor: "pointer",
+          fontSize: 13, color: "#aeaeb2",
+        }}>
+          Non merci, continuer
+        </button>
       </div>
-    </>
+    </div>
   );
 }
 
@@ -97,111 +99,111 @@ export function BmiCalculator() {
     setError("");
     const analysis = analyzeBody({ poids: p, taille: t, age, genre });
     setResult(analysis);
-    // Show popup 2 seconds after results appear
-    setTimeout(() => setShowPopup(true), 2000);
-  }
-
-  function handleClosePopup() {
-    setShowPopup(false);
+    setTimeout(() => setShowPopup(true), 5000);
   }
 
   return (
-    <div className="min-h-screen py-10 px-4" style={{ background: "#08080d" }}>
-      {/* WhatsApp Popup */}
-      {showPopup && <WhatsappPopup onClose={handleClosePopup} />}
+    <div style={{ minHeight: "100vh", background: "#ffffff", paddingBottom: 60 }}>
+      {showPopup && <WhatsappPopup onClose={() => setShowPopup(false)} />}
 
-      <div className="max-w-lg mx-auto flex flex-col gap-6">
+      {/* Header */}
+      <div style={{
+        background: "rgba(255,255,255,0.85)",
+        backdropFilter: "blur(20px)",
+        borderBottom: "0.5px solid rgba(0,0,0,0.08)",
+        padding: "20px 20px 18px",
+        textAlign: "center",
+        position: "sticky", top: 0, zIndex: 10,
+      }}>
+        <p style={{ fontSize: 12, fontWeight: 600, color: "#8e8e93", letterSpacing: "0.08em", textTransform: "uppercase", margin: "0 0 4px" }}>
+          Musculation
+        </p>
+        <h1 style={{ fontSize: 22, fontWeight: 700, color: "#1c1c1e", margin: 0, letterSpacing: "-0.3px" }}>
+          Analyse corporelle
+        </h1>
+      </div>
 
-        {/* Header */}
-        <div className="text-center pt-4">
-          <h1 className="text-3xl font-black tracking-tight text-white">
-            Analyse corporelle
-          </h1>
-          <p className="text-sm text-white/40 mt-1">
-            IMC · Corpulence · Masse grasse · Musculation
-          </p>
-        </div>
+      <div style={{ maxWidth: 480, margin: "0 auto", padding: "24px 16px 0" }}>
 
-        {/* Form */}
-        <div className="rounded-3xl p-6 flex flex-col gap-5" style={{ background: "linear-gradient(145deg, #0f0f14 0%, #16141f 100%)" }}>
+        {/* Form Card */}
+        <div style={{
+          background: "#fff",
+          borderRadius: 20,
+          padding: "24px 20px",
+          boxShadow: "0 8px 40px rgba(0,0,0,0.13), 0 2px 8px rgba(0,0,0,0.08), 0 0 0 0.5px rgba(0,0,0,0.06)",
+          marginBottom: 16,
+        }}>
 
           {/* Gender */}
-          <div>
-            <p className="text-[10px] uppercase tracking-widest text-white/40 font-semibold mb-3">Sexe</p>
-            <div className="grid grid-cols-2 gap-2">
-              {(["homme", "femme"] as Gender[]).map((g) => (
-                <button
-                  key={g}
-                  onClick={() => setGenre(g)}
-                  className={cn(
-                    "py-3 px-4 rounded-xl text-sm font-semibold capitalize transition-all duration-150 border",
-                    genre === g
-                      ? "bg-violet-600 text-white border-violet-500"
-                      : "bg-white/4 text-white/50 border-white/8 hover:border-violet-500/50 hover:text-white/80"
-                  )}
-                >
-                  {g === "homme" ? "👨 Homme" : "👩 Femme"}
-                </button>
-              ))}
-            </div>
+          <p style={{ fontSize: 11, fontWeight: 600, color: "#8e8e93", textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: 10 }}>Sexe</p>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 24 }}>
+            {(["homme", "femme"] as Gender[]).map((g) => (
+              <button key={g} onClick={() => setGenre(g)} style={{
+                padding: "12px 0",
+                borderRadius: 12,
+                border: genre === g ? "1.5px solid #007AFF" : "1px solid #e5e5ea",
+                background: genre === g ? "#EAF3FF" : "#fff",
+                color: genre === g ? "#007AFF" : "#6e6e73",
+                fontWeight: 600, fontSize: 14,
+                cursor: "pointer", transition: "all 0.15s",
+              }}>
+                {g === "homme" ? "👨 Homme" : "👩 Femme"}
+              </button>
+            ))}
           </div>
 
           {/* Poids & Taille */}
-          <div className="grid grid-cols-2 gap-4">
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 24 }}>
             {[
               { id: "poids", label: "Poids", unit: "kg", value: poids, set: setPoids, ph: "75" },
               { id: "taille", label: "Taille", unit: "cm", value: taille, set: setTaille, ph: "175" },
             ].map(({ id, label, unit, value, set, ph }) => (
-              <div key={id} className="flex flex-col gap-2">
-                <label className="text-[10px] uppercase tracking-widest text-white/40 font-semibold">{label}</label>
-                <div className="relative">
+              <div key={id}>
+                <p style={{ fontSize: 11, fontWeight: 600, color: "#8e8e93", textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: 8 }}>{label}</p>
+                <div style={{ position: "relative" }}>
                   <input
-                    id={id}
-                    type="number"
-                    value={value}
+                    type="number" value={value} placeholder={ph}
                     onChange={(e) => set(e.target.value)}
-                    placeholder={ph}
-                    className="w-full py-3 pl-4 pr-10 rounded-xl text-white font-semibold text-base outline-none transition-all"
                     style={{
-                      background: "rgba(255,255,255,0.06)",
-                      border: "1px solid rgba(255,255,255,0.1)",
+                      width: "100%", padding: "12px 36px 12px 14px",
+                      borderRadius: 12, border: "1px solid #e5e5ea",
+                      fontSize: 17, fontWeight: 600, color: "#1c1c1e",
+                      background: "#fff", outline: "none",
+                      boxSizing: "border-box",
                     }}
-                    onFocus={(e) => (e.target.style.borderColor = "#7c3aed")}
-                    onBlur={(e) => (e.target.style.borderColor = "rgba(255,255,255,0.1)")}
+                    onFocus={(e) => { e.target.style.borderColor = "#007AFF"; e.target.style.boxShadow = "0 0 0 3px rgba(0,122,255,0.12)"; }}
+                    onBlur={(e) => { e.target.style.borderColor = "#e5e5ea"; e.target.style.boxShadow = "none"; }}
                   />
-                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-white/30 pointer-events-none">{unit}</span>
+                  <span style={{ position: "absolute", right: 12, top: "50%", transform: "translateY(-50%)", fontSize: 13, color: "#aeaeb2", pointerEvents: "none" }}>{unit}</span>
                 </div>
               </div>
             ))}
           </div>
 
-          {/* Age slider */}
-          <div>
-            <div className="flex justify-between items-center mb-3">
-              <label className="text-[10px] uppercase tracking-widest text-white/40 font-semibold">Âge</label>
-              <span className="text-sm font-bold text-white tabular-nums">{age} ans</span>
+          {/* Age */}
+          <div style={{ marginBottom: 28 }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
+              <p style={{ fontSize: 11, fontWeight: 600, color: "#8e8e93", textTransform: "uppercase", letterSpacing: "0.07em", margin: 0 }}>Âge</p>
+              <span style={{ fontSize: 17, fontWeight: 700, color: "#1c1c1e" }}>{age} ans</span>
             </div>
-            <input
-              type="range"
-              min={15} max={80} step={1}
-              value={age}
+            <input type="range" min={15} max={80} step={1} value={age}
               onChange={(e) => setAge(Number(e.target.value))}
-              className="w-full"
-              style={{ accentColor: "#7c3aed" }}
+              style={{ width: "100%", accentColor: "#007AFF" }}
             />
-            <div className="flex justify-between text-[10px] text-white/25 mt-1">
-              <span>15 ans</span>
-              <span>80 ans</span>
+            <div style={{ display: "flex", justifyContent: "space-between", fontSize: 11, color: "#aeaeb2", marginTop: 4 }}>
+              <span>15 ans</span><span>80 ans</span>
             </div>
           </div>
 
-          {error && <p className="text-sm text-red-400 text-center">{error}</p>}
+          {error && <p style={{ fontSize: 13, color: "#FF3B30", textAlign: "center", marginBottom: 16 }}>{error}</p>}
 
-          <button
-            onClick={handleCalculate}
-            className="w-full py-4 rounded-xl text-white font-bold text-base transition-all duration-150 hover:opacity-90 active:scale-[0.98]"
-            style={{ background: "linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%)" }}
-          >
+          <button onClick={handleCalculate} style={{
+            width: "100%", padding: "15px 0",
+            borderRadius: 14, border: "none",
+            background: "#007AFF", color: "#fff",
+            fontSize: 16, fontWeight: 700, cursor: "pointer",
+            letterSpacing: "-0.2px",
+          }}>
             Analyser mon profil →
           </button>
         </div>

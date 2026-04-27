@@ -25,43 +25,21 @@ function getLabel(imc: number, genre: Gender): string {
   }
 }
 
-function getStyle(imc: number): {
-  filter: string;
-  badge: string;
-  badgeText: string;
-  glow: string;
-} {
-  if (imc < 18.5) return {
-    filter: "invert(62%) sepia(50%) saturate(400%) hue-rotate(120deg) brightness(0.85)",
-    badge: "#5DCAA5", badgeText: "#04342C",
-    glow: "rgba(93,202,165,0.3)",
-  };
-  if (imc < 25) return {
-    filter: "invert(40%) sepia(70%) saturate(500%) hue-rotate(210deg) brightness(0.85)",
-    badge: "#534AB7", badgeText: "#EEEDFE",
-    glow: "rgba(99,92,202,0.3)",
-  };
-  if (imc < 30) return {
-    filter: "invert(65%) sepia(90%) saturate(600%) hue-rotate(10deg) brightness(0.88)",
-    badge: "#EF9F27", badgeText: "#412402",
-    glow: "rgba(239,159,39,0.3)",
-  };
-  return {
-    filter: "invert(30%) sepia(90%) saturate(700%) hue-rotate(330deg) brightness(0.85)",
-    badge: "#E24B4A", badgeText: "#501313",
-    glow: "rgba(226,75,74,0.3)",
-  };
+function getStyle(imc: number): { filter: string; badge: string; badgeText: string; glow: string } {
+  if (imc < 18.5) return { filter: "invert(62%) sepia(50%) saturate(400%) hue-rotate(120deg) brightness(0.9)", badge: "#e8faf2", badgeText: "#1a7a4a", glow: "rgba(48,209,88,0.15)" };
+  if (imc < 25)   return { filter: "invert(40%) sepia(70%) saturate(500%) hue-rotate(210deg) brightness(0.9)", badge: "#EAF3FF", badgeText: "#0055CC", glow: "rgba(0,122,255,0.15)" };
+  if (imc < 30)   return { filter: "invert(65%) sepia(90%) saturate(600%) hue-rotate(10deg) brightness(0.9)",  badge: "#FFF4E0", badgeText: "#A05800", glow: "rgba(255,159,10,0.15)" };
+  return               { filter: "invert(30%) sepia(90%) saturate(700%) hue-rotate(330deg) brightness(0.9)",  badge: "#FFECEB", badgeText: "#CC1400", glow: "rgba(255,59,48,0.15)" };
 }
 
-// Horizontal scale to simulate fat/thin body shape
 function getScaleX(imc: number): number {
   if (imc < 16)   return 0.72;
   if (imc < 18.5) return 0.82;
   if (imc < 22)   return 0.92;
   if (imc < 25)   return 1.0;
-  if (imc < 28)   return 1.12;
-  if (imc < 32)   return 1.26;
-  return 1.4;
+  if (imc < 28)   return 1.1;
+  if (imc < 32)   return 1.22;
+  return 1.35;
 }
 
 export function BodySilhouette({ imc, genre }: BodySilhouetteProps) {
@@ -71,24 +49,20 @@ export function BodySilhouette({ imc, genre }: BodySilhouetteProps) {
   const src = genre === "homme" ? "/silhouette-man.png" : "/silhouette-woman.png";
 
   return (
-    <div className="flex flex-col items-center gap-4 w-full select-none">
-      {/* Container */}
-      <div className="relative flex items-end justify-center w-full" style={{ minHeight: 280 }}>
-        {/* Glow floor */}
-        <div
-          className="absolute bottom-0 left-1/2 -translate-x-1/2 rounded-full blur-2xl pointer-events-none"
-          style={{ width: "60%", height: 48, background: glow }}
-        />
-
-        {/* Silhouette image — tinted via CSS filter, scaled horizontally for IMC */}
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 12, width: "100%" }}>
+      <div style={{ position: "relative", display: "flex", alignItems: "flex-end", justifyContent: "center", width: "100%", minHeight: 240 }}>
+        {/* glow */}
+        <div style={{
+          position: "absolute", bottom: 0, left: "50%", transform: "translateX(-50%)",
+          width: "60%", height: 40, borderRadius: "50%",
+          background: glow, filter: "blur(16px)",
+          pointerEvents: "none",
+        }} />
         <img
           src={src}
-          alt={`Silhouette ${genre} — ${label}`}
+          alt={`${genre} — ${label}`}
           style={{
-            height: 280,
-            width: "auto",
-            display: "block",
-            objectFit: "contain",
+            height: 240, width: "auto",
             filter,
             transform: `scaleX(${scaleX})`,
             transformOrigin: "bottom center",
@@ -96,12 +70,12 @@ export function BodySilhouette({ imc, genre }: BodySilhouetteProps) {
           }}
         />
       </div>
-
-      {/* Badge */}
-      <span
-        className="text-[11px] font-bold px-5 py-1.5 rounded-full tracking-widest uppercase"
-        style={{ background: badge, color: badgeText }}
-      >
+      <span style={{
+        fontSize: 11, fontWeight: 700,
+        padding: "5px 14px", borderRadius: 99,
+        background: badge, color: badgeText,
+        letterSpacing: "0.06em", textTransform: "uppercase",
+      }}>
         {label}
       </span>
     </div>
