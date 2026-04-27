@@ -108,13 +108,11 @@ export function BmiCalculator() {
 
       {/* Header */}
       <div style={{
-        background: "rgba(255,255,255,0.85)",
-        backdropFilter: "blur(20px)",
-        borderBottom: "0.5px solid rgba(0,0,0,0.08)",
-        padding: "20px 20px 18px",
-        textAlign: "center",
-        position: "sticky", top: 0, zIndex: 10,
-      }}>
+  background: "#fff",
+  borderBottom: "0.5px solid rgba(0,0,0,0.08)",
+  padding: "20px 20px 18px",
+  textAlign: "center",
+}}>
         <p style={{ fontSize: 12, fontWeight: 600, color: "#8e8e93", letterSpacing: "0.08em", textTransform: "uppercase", margin: "0 0 4px" }}>
           Musculation
         </p>
